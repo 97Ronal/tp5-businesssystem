@@ -3,6 +3,7 @@
 
 
 前端使用的框架是layUI
+
 后台使用的框架是thinkPHP5.4
 
 详细开发文档参考 [ThinkPHP5完全开发手册](http://www.kancloud.cn/manual/thinkphp5)
