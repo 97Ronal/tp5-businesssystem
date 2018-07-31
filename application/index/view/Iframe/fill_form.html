@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/layui-v2.3.0/layui/css/layui.css">
+
+    <title>client_form</title>
+</head>
+
+<body>
+    <form class="layui-form" action="../sale/save" method="POST">
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择车型</label>
+            <div class="layui-input-block">
+                <select name="car" lay-verify="required" lay-filter="test">
+                    <option value=""></option>
+                    {volist name="car" id="value"}
+                    <option value="{$value}">{$value}</option>
+                    {/volist}
+            </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择零件</label>
+            <div class="layui-input-block">
+                <select name="parts" lay-verify="required">
+                    <option value=""></option>
+                    {volist name="parts" id="value"}
+                    <option value="{$value}">{$value}</option>
+                    {/volist}
+            </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">购买数量</label>
+            <div class="layui-input-block">
+                <input type="text" name="number" required lay-verify="required|number" placeholder="请输入购买数量" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">顾客姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="tel" required lay-verify="required|phone|number" placeholder="请输入电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开户行</label>
+            <div class="layui-input-block">
+                <select name="bank" lay-verify="required">
+                      <option value=""></option>
+                      <option value="中国工商银行">中国工商银行</option>
+                      <option value="中国建设银行">中国建设银行</option>
+                      <option value="交通银行">交通银行</option>
+                      <option value="中国农业银行">中国农业银行</option>
+                      <option value="招商银行">招商银行</option>
+                    </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">银行卡号</label>
+            <div class="layui-input-block">
+                <input type="text" name="card_id" required lay-verify="required" placeholder="请输入银行卡号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">取货日期</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="test1" name="date" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单选框</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="男" title="男">
+                <input type="radio" name="sex" value="女" title="女" checked>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注信息</label>
+            <div class="layui-input-block">
+                <textarea name="remarks" placeholder="默认为空" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="" onclick="">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script src="__STATIC__/layui-v2.3.0/layui/layui.js"></script>
+    <script>
+        //Demo
+        layui.use('form', function() {
+            var form = layui.form;
+            form.on('submit(formDemo)', function(data) {
+                //layer.msg(data);
+                //return false;
+            });
+
+            form.on('select(test)', function(data) {
+
+
+            });
+        });
+
+        layui.use('laydate', function() {
+            var laydate = layui.laydate;
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#test1' //指定元素
+            });
+        });
+
+
+
+        function selectParts(form) {
+            var car = form.car;
+            $.post('{:url("sale/selectParts/car/")}' + car, {
+                    car: car
+                },
+                function() {
+
+                })
+
+
+        }
+    </script>
+</body>
+
+</html>

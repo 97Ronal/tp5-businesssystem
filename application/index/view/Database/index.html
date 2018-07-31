@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/bs/css/bootstrap.min.css">
+    <script src="__STATIC__/bs/js/bootstrap.min.js"></script>
+    <script src="__STATIC__/bs/js/jquery.min.js"></script>
+    <title>用户查询</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="btn btn-success">用户展示界面</div>
+                <a href="/Database/create" class="btn btn-danger">添加用户</a>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-hover">
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>PASSWORD</th>
+                    <th>AGE</th>
+                    <th>修改</th>
+                    <th>删除</th>
+                    <th>Ajax删除</th>
+                    {volist name="data" id="value"}
+                    <tr>
+                        <td>{$value.id}</td>
+                        <td>{$value.nam}</td>
+                        <td>{$value.PSW}</td>
+                        <td>{$value.TELE}</td>
+                        <td><a href="/Database/edit/id/{$value.id}">修改</a></td>
+                        <td>
+                            <form action="/Database/delete/id/{$value.id}" method="POST">
+                                <input type="hidden" name="_method" value="delete">
+                                <button>删除</button>
+                            </form>
+                        </td>
+                        <td>
+                            <button onclick="del(this,{$value.id})">Ajax-删除</button>
+                        </td>
+                    </tr>
+                    {/volist}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function del(obj, id) {
+        //alert(id);
+        $.post('{:url("Database/ajax_del")}', {
+            id: id
+        }, function(data) {
+            //alert(data);
+            if (data.statu == 200) {
+                alert(data.info);
+                $(obj).parent().parent().remove();
+            } else {
+                alert(data.info);
+            }
+        });
+    }
+</script>
+
+</html>

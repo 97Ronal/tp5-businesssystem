@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/layui-v2.3.0/layui/css/layui.css">
+
+    <title>client_form</title>
+</head>
+
+<body>
+    <form class="layui-form" action="../../../sale/editParts/id/{$data.id}/request" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="layui-form-item">
+            <label class="layui-form-label">填写车型</label>
+            <div class="layui-input-block">
+                <input type="text" name="car" required lay-verify="required" placeholder="请输入车型" autocomplete="off" class="layui-input" value="{$data.car}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">零件名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="partsname" required lay-verify="required" placeholder="请输入零件名称" autocomplete="off" class="layui-input" value="{$data.partsname}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改库存</label>
+            <div class="layui-input-block">
+                <input type="text" name="storage" required lay-verify="required|number" placeholder="请修改库存数量" autocomplete="off" class="layui-input" value="{$data.storage}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">请修改定价</label>
+            <div class="layui-input-block">
+                <input type="text" name="price" required lay-verify="required|number" placeholder="￥" autocomplete="off" class="layui-input" value="{$data.price}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo" onclick="">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script src="__STATIC__/layui-v2.3.0/layui/layui.js"></script>
+    <script>
+        //Demo
+        layui.use('form', function() {
+            var form = layui.form;
+            form.on('submit(formDemo)', function(data) {
+                layer.msg(data);
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>

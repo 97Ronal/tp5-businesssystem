@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>用户注册</title>
+    <meta name="author" content="DeathGhost" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/style.css" />
+    <style>
+        body {
+            height: 100%;
+            background: #16a085;
+            overflow: hidden;
+        }
+        
+        canvas {
+            z-index: -1;
+            position: absolute;
+        }
+    </style>
+    <script src="__STATIC__/js/jquery.js"></script>
+    <script src="__STATIC__/js/verificationNumbers.js"></script>
+    <script src="__STATIC__/js/Particleground.js"></script>
+    <script>
+        $(document).ready(function() {
+            //粒子背景特效
+            $('body').particleground({
+                dotColor: '#5cbdaa',
+                lineColor: '#5cbdaa'
+            });
+            //验证码
+            createCode();
+            //测试提交，对接程序删除即可
+            $(".submit_btn").click(function() {
+                location.href = "javascrpt:;" /*tpa=http://***index.html*/ ;
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <dl class="admin_login">
+        <dt>
+    <strong>汽车零件销售系统</strong>
+    <em>Management System</em>
+    </dt>
+        <form action="{:url('login/save')}" method="POST">
+            <dd class="user_icon">
+                <input type="text" placeholder="用户名" class="login_txtbx" name="name" />
+            </dd>
+            <dd class="tel_icon">
+                <input type="text" placeholder="电话" class="login_txtbx" name="tel" />
+            </dd>
+            <dd class="pwd_icon">
+                <input type="password" placeholder="请输入密码" class="login_txtbx" name="password" />
+            </dd>
+            <dd class="pwd_icon">
+                <input type="password" placeholder="请再次输入密码" class="login_txtbx" name="repassword" />
+                <span>请输入密码</span>
+            </dd>
+
+            <dd>
+                <input type="button" value="注册" class="submit_btn" onclick="checkToSubmit(this.form);" />
+            </dd>
+            <dd>
+                <p>© 2015-2016 jq22 版权所有</p>
+                <p>陕B2-8998988-1</p>
+            </dd>
+        </form>
+
+    </dl>
+</body>
+
+<script>
+    function checkToSubmit(form) {
+        alert('正确打开了这个函数');
+
+        var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+
+        if (form.name.value == "") {
+            alert("请输入用户名");
+            form.name.focus();
+            return false;
+        }
+
+        if (!myreg.test(form.tel.value)) {
+            alert("手机号输入错误，请输入正确的手机号");
+            form.tel.focus();
+            return false;
+        }
+
+        if (form.password.value.length < 6) {
+            alert("密码长度不能小于6位");
+            return false;
+        }
+
+        if (form.password.value != form.repassword.value) {
+            alert('两次输入密码不一致');
+            return false;
+        }
+        form.submit();
+
+
+    }
+</script>
+
+</html>

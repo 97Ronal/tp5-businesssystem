@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/layui-v2.3.0/layui/css/layui.css">
+
+    <title>client_form</title>
+</head>
+
+<body>
+    <form class="layui-form" action="../../sale/addOutorder" method="POST">
+        <!-- <div class="layui-form-item">
+            <label class="layui-form-label">零件ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="parts_id" required lay-verify="required" placeholder="请输入零件ID" autocomplete="off" class="layui-input">
+            </div>
+        </div> -->
+        <!-- <div class="layui-form-item">
+            <label class="layui-form-label">零件名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="parts_name" required lay-verify="required" placeholder="请输入零件名称" autocomplete="off" class="layui-input">
+            </div>
+        </div> -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="order_id" required lay-verify="required|number" placeholder="请输入订单ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">出库数量</label>
+            <div class="layui-input-block">
+                <input type="text" name="number" required lay-verify="required|number" placeholder="请输入出货数量" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">取货日期</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="test1" name="date" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo" onclick="">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script src="__STATIC__/layui-v2.3.0/layui/layui.js"></script>
+    <script>
+        //Demo
+        layui.use('form', function() {
+            var form = layui.form;
+            form.on('submit(formDemo)', function(data) {
+                layer.msg(data);
+                return false;
+            });
+        });
+
+        layui.use('laydate', function() {
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#test1' //指定元素
+            });
+        });
+    </script>
+</body>
+
+</html>

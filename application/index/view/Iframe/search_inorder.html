@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__STATIC__/layui-v2.3.0/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/css/main.css">
+    <title>client_form</title>
+</head>
+
+<body>
+    <form id="myForm" class="layui-form layui-form-pane layui-inline" action="../sale/search" method="POST">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">日期范围</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="date_min" placeholder="年-月-日" autocomplete="off" class="layui-input" id="firstdate">
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="date_max" placeholder="年-月-日" autocomplete="off" class="layui-input" id="seconddate">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">入库单ID</label>
+                <div class="layui-input-inline" style="width: 80px;">
+                    <input type="text" name="id" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">供货商搜索</label>
+                <div class="layui-input-inline" style="width: 80px;">
+                    <input type="text" name="server" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">零件名搜索</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="parts" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" type="button" onclick="reload(this.form)">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+
+    </form>
+    <table id="demo" lay-filter="test"></table>
+    <script src="__STATIC__/layui-v2.3.0/layui/layui.js"></script>
+    <script src="__STATIC__/js/jquery.js"></script>
+    <script>
+        //window.date_min = document.getElementById('myForm').date_min.value;
+        //alert(date_min);
+
+
+        layui.use('table', function() {
+            var table = layui.table;
+
+            //第一个实例
+            var option = {
+                elem: '#demo',
+                //height: 450,
+                url: '../sale/searchInorder/date_min/this_is_not_define/date_max/this_is_not_define/id/this_is_not_define/server/this_is_not_define/parts/this_is_not_define',
+                page: false, //开启分页
+                loading: true,
+                cols: [
+                    [ //表头
+                        {
+                            field: 'id',
+                            title: '入库单ID',
+                            sort: true,
+                            fixed: 'left'
+                        }, {
+                            field: 'parts',
+                            title: '零件名称',
+                            sort: true,
+                        }, {
+                            field: 'car',
+                            title: '车型',
+                            sort: true
+                        }, {
+                            field: 'number',
+                            title: '入库数量',
+                            sort: true
+                        }, {
+                            field: 'date',
+                            title: '入库时间',
+                            sort: true
+                        }, {
+                            field: 'server',
+                            title: '供货商',
+                            sort: true
+                        }
+                    ]
+                ]
+            }
+
+            table.render(option);
+
+        });
+
+        layui.use('laydate', function() {
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#firstdate' //指定元素
+            });
+            laydate.render({
+                elem: '#seconddate' //指定元素
+            });
+        });
+
+        function reload(form) {
+            var date_min = form.date_min.value;
+            var date_max = form.date_max.value;
+            var id = form.id.value;
+            var parts = form.parts.value;
+            var server = form.server.value;
+
+            //alert(name);
+            document.cookie = "date_min=" + date_min;
+            alert('1');
+
+            document.cookie = "date_max=" + date_max;
+            document.cookie = "id=" + id;
+            document.cookie = "parts=" + escape(parts);
+            document.cookie = "server=" + escape(server);
+            var x = document.cookie;
+            //alert(x);
+
+            layui.use('table', function() {
+                var table = layui.table;
+                var date_min = document.cookie.split("date_min=")[1].split(";")[0];
+                var date_max = document.cookie.split("date_max=")[1].split(";")[0];
+                //alert("date_max1=" + date_max);
+
+                var id = document.cookie.split("id=")[1].split(";")[0];
+                var parts = unescape(document.cookie.split("parts=")[1].split(";")[0]);
+                var server = unescape(document.cookie.split("server=")[1].split(";")[0]);
+                // alert(parts);
+                date_min = toUndefine(date_min);
+                date_max = toUndefine(date_max);
+                id = toUndefine(id);
+                parts = toUndefine(parts);
+                server = toUndefine(server);
+                // alert("date_min=" + date_min);
+                // alert("date_max2=" + date_max);
+                // alert("id=" + id);
+                // alert("parts=" + parts);
+                // alert("server=" + server);
+
+
+                //第一个实例
+                var option = {
+                    elem: '#demo',
+                    height: 500,
+                    url: '../sale/searchInorder/date_min/' + date_min + '/date_max/' + date_max + '/id/' + id + '/parts/' + parts + '/server/' + server,
+                    page: false, //开启分页
+                    loading: true,
+                    cols: [
+                        [ //表头
+                            {
+                                field: 'id',
+                                title: '入库单ID',
+                                sort: true,
+                                fixed: 'left'
+                            }, {
+                                field: 'parts',
+                                title: '零件名称',
+                                sort: true,
+                            }, {
+                                field: 'car',
+                                title: '车型',
+                                sort: true
+                            }, {
+                                field: 'number',
+                                title: '入库数量',
+                                sort: true
+                            }, {
+                                field: 'date',
+                                title: '入库时间',
+                                sort: true
+                            }, {
+                                field: 'server',
+                                title: '供货商',
+                                sort: true
+                            }
+                        ]
+                    ]
+                }
+
+                table.render(option);
+                setTimeout(function() {
+                    var head = document.getElementsByTagName('tr');
+                    var len = head.length;
+                    //alert(len);
+                    for (let i = 0; i < len; i++) {
+                        let id = head[i].firstChild.firstChild.innerHTML;
+                        //alert(id);
+                        head[i].setAttribute('onclick', 'linkClick(' + id + ')');
+                    }
+                }, 500);
+
+            });
+            //option.url = "../sale/search/id/5";
+            //alert(option);
+        }
+
+        function toUndefine(str) {
+            if (str == "") {
+                return "this_is_not_define";
+            } else {
+                return str;
+            }
+        }
+
+        window.onload = setTimeout(function() {
+            var head = document.getElementsByTagName('tr');
+            var len = head.length;
+            //alert(len);
+            for (let i = 0; i < len; i++) {
+                let id = head[i].firstChild.firstChild.innerHTML;
+                //alert(id);
+                head[i].setAttribute('onclick', 'linkClick(' + id + ')');
+            }
+        }, 500);
+
+        // function linkClick(id) {
+        //     window.open("../Iframe/parts_edit/id/" + id, "_self");
+        //     //alert(id);
+        //     // var title = window.top.document.getElementsByName("title");
+        //     // //alert(typeof(title[0]));
+        //     // title[0].classList.remove('layui-this');
+        //     // title[1].classList.add('layui-this');
+
+        // }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>主页面</title>
+</head>
+
+<body>
+    <h1>这是一个测试标题</h1>
+    <table border="1" width="800px" align="center">
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>PASS</th>
+            <th>TELE</th>
+        </tr>
+        {volist name = "data" id = "value"}
+        <tr>
+            <td>{$value.id}</td>
+            <td>{$value.nam}</td>
+            <td>{$value.PSW}</td>
+            <td>{$value.TELE}</td>
+        </tr>
+        {/volist}
+
+    </table>
+</body>
+
+</html>
